@@ -109,7 +109,7 @@ Output:
 General syntax: `Array.last( offset )`
 
 ##### .flatten()
-Reduces neted arrays into one, single array.
+Reduces nested arrays into one, single array.
 
 ```javascript
 var arr = [ 1, 2, [ 3, 4 [ 5, 6 ] ] ];
@@ -258,7 +258,7 @@ console.log( arr);
 General syntax: `Object.map( function( key, value ) {} )`
 
 ##### .extract()
-Returns an array containg the key-value pairs as a seperate array.
+Returns an array containing the key-value pairs as a separate array.
 
 ```javascript
 var obj = {
@@ -338,7 +338,7 @@ Output:
 General syntax: `window.math.round( val, decimals )`
 
 ##### .toRadians( val, roundTo )
-Conver the value `val` to its equiv. radian representation rounded to the specified decimals (default 2).
+Converts the value `val` to its equivalent radian representation rounded to the specified number of decimals (default 2).
 
 ```javascript
 console.log( window.math.toRadians( 114.592 ) );
@@ -354,7 +354,7 @@ Output:
 General syntax: `window.math.toRadians( val, roundTo )`
 
 ##### .toDegrees( val, roundTo )
-Conver the value `val` to its equiv. radian representation rounded to the specified decimals (default 2).
+Converts the value `val` to its equivalent radian representation rounded to the specified number of decimals (default 2).
 
 ```javascript
 console.log( window.math.toDegrees( 2 ) );
