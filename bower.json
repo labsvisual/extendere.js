@@ -1,0 +1,35 @@
+{
+  "name": "Extendere.js",
+  "authors": [
+    "Shreyansh Pandey <334@doonschool.com>"
+  ],
+  "description": "A library which adds some very useful functions to the base type classes available in JavaScript.",
+  "main": "",
+  "moduleType": [],
+  "keywords": [
+    "simple",
+    "easy",
+    "fast",
+    "extension",
+    "javascript",
+    "modules",
+    "underscore",
+    "underscorejs",
+    "functions",
+    "array",
+    "functions",
+    "array",
+    "string",
+    "wrapper",
+    "classes"
+  ],
+  "license": "MIT",
+  "homepage": "http://isomr.co/extenderejs",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}
