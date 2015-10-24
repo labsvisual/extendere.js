@@ -263,11 +263,16 @@ Array.prototype.union = function( secondArray ) {
 
     var ret     = this;
 
-    for( var i = 0; i < secondArray.length; i++ ) {
+    for( var j = 0; j < arguments.length; j++ ) {
 
-        var current = secondArray[ i ];
+        var arr = arguments[ j ];
+        for( var i = 0; i < arr.length; i++ ) {
 
-        if( !ret.exists( current ) ){ ret.push( current ); }
+            var current = arr[ i ];
+
+            if( !ret.exists( current ) ){ ret.push( current ); }
+
+        }
 
     }
 

@@ -205,6 +205,15 @@ describe("Extendere", function() {
 
             });
 
+            it( "should return an array containing the union of the passed arrays", function() {
+
+                var arr = [ 1, 2, 3 ]
+                    arx = arr.union( [ 3, 4, 5 ], [ 5, 6, 7 ], [ 5, 6, 7 ], [ 8, 9, 10 ] );
+
+                expect( arx ).to.eql( [ 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 ] );
+
+            });
+
         });
 
         describe( ".intersect()", function() {
