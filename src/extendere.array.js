@@ -37,69 +37,111 @@ Array.prototype.map = function( filter ) {
 
 }
 
-Array.prototype.sort = function() {
+Array.prototype.sortWith = function( algorithm ) {
 
-    // https://www.nczonline.net/blog/2012/11/27/computer-science-in-javascript-quicksort/
     var context = this;
 
-    var swap = function( items, firstIndex, secondIndex ){
-        var temp = items[ firstIndex ];
-        items[ firstIndex ] = items[ secondIndex ];
-        items[ secondIndex ] = temp;
+    algorithm = ( algorithm ) || "quicksort";
+
+    switch( algorithm.toLowerCase() ) {
+
+        default:
+        case "quicksort":
+
+            var swap = function( items, firstIndex, secondIndex ){
+                var temp = items[ firstIndex ];
+                items[ firstIndex ] = items[ secondIndex ];
+                items[ secondIndex ] = temp;
+            }
+
+            var partition = function( items, left, right ) {
+
+                var pivot   = items[ Math.floor( ( right + left ) / 2 ) ],
+                    i       = left,
+                    j       = right;
+
+
+                while ( i <= j ) {
+
+                    while ( items[ i ] < pivot ) {
+                        i++;
+                    }
+
+                    while ( items[ j ] > pivot ) {
+                        j--;
+                    }
+
+                    if ( i <= j ) {
+                        swap( items, i, j );
+                        i++;
+                        j--;
+                    }
+                }
+
+                return i;
+            }
+
+            var quickSort = function( items, left, right ) {
+
+                var index;
+
+                if (items.length > 1) {
+
+                    left = typeof left != "number" ? 0 : left;
+                    right = typeof right != "number" ? items.length - 1 : right;
+
+                    index = partition( items, left, right );
+
+                    if ( left < index - 1 ) {
+                        quickSort( items, left, index - 1 );
+                    }
+
+                    if ( index < right ) {
+                        quickSort( items, index, right );
+                    }
+
+                }
+
+                return items;
+            }
+
+            return quickSort( context );
+
+            break;
+
+        case "bubblesort":
+
+            var temp,
+                arr = context;
+
+            for( var i = 0; i < context.length; i++ ) {
+
+                for( var j = i; j > 0; j-- ) {
+
+                    if( arr[ j ] < arr[ j - 1 ] ) {
+
+                        temp = arr[ j ];
+
+                        arr[ j ] = arr[ j - 1 ];
+                        arr[ j - 1 ] = temp;
+
+                    }
+
+                }
+
+            }
+            
+            return arr;
+
+            break;
+
     }
 
-    var partition = function( items, left, right ) {
+}
 
-        var pivot   = items[ Math.floor( ( right + left ) / 2 ) ],
-            i       = left,
-            j       = right;
+Array.prototype.sort = function() {
 
-
-        while ( i <= j ) {
-
-            while ( items[ i ] < pivot ) {
-                i++;
-            }
-
-            while ( items[ j ] > pivot ) {
-                j--;
-            }
-
-            if ( i <= j ) {
-                swap( items, i, j );
-                i++;
-                j--;
-            }
-        }
-
-        return i;
-    }
-
-    var quickSort = function( items, left, right ) {
-
-        var index;
-
-        if (items.length > 1) {
-
-            left = typeof left != "number" ? 0 : left;
-            right = typeof right != "number" ? items.length - 1 : right;
-
-            index = partition( items, left, right );
-
-            if ( left < index - 1 ) {
-                quickSort( items, left, index - 1 );
-            }
-
-            if ( index < right ) {
-                quickSort( items, index, right );
-            }
-
-        }
-
-        return items;
-    }
-
-    return quickSort( context );
+    return ( Array.prototype.sortWith.call( this ) );
 
 }
 
@@ -190,16 +232,13 @@ Array.prototype.last = function( numberOfElements ) {
 Array.prototype.flatten = function() {
 
     var ret = [],
-        isArray = function( element ) {
-            return Object.prototype.toString.call( element ) === '[object Array]';
-        },
         flat = function( element ) {
 
             for( var i = 0; i < element.length; i++ ) {
 
                 var currentElement = element[ i ];
 
-                if ( isArray( currentElement ) ) {
+                if ( Array.prototype.isArray.call( this, currentElement ) ) {
 
                     flat( currentElement );
 
@@ -216,7 +255,7 @@ Array.prototype.flatten = function() {
     for( var i = 0; i < this.length; i++ ) {
 
         var currentElement = this[ i ];
-        if ( isArray( currentElement ) ) {
+        if ( Array.prototype.isArray.call( this, currentElement ) ) {
 
             flat( currentElement );
 
@@ -282,17 +321,13 @@ Array.prototype.union = function( secondArray ) {
 
 Array.prototype.intersect = function( secondArray ) {
 
-    var isArray = function( array ) {
-        return Object.prototype.toString.call( array ) === '[object Array]';
-    }
-
     var ret = [],
         arr = [];
 
     for( var i = 0; i < arguments.length; i++ ) {
 
         var current = arguments[ i ];
-        if( isArray( current ) ) {
+        if( Array.prototype.isArray.call( this, current ) ) {
 
             arr.push( current );
 
@@ -357,5 +392,11 @@ Array.prototype.atRandom = function( length ) {
         return ret;
 
     }
+
+}
+
+Array.prototype.isArray = function( arr ) {
+
+    return( Object.prototype.toString.call( arr ) === '[object Array]' );
 
 }

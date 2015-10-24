@@ -58,6 +58,21 @@ console.log( x );
 
 General syntax: `Array.map( function( item ) {} )`
 
+##### .sortWith( algorithm )
+Sorts the current array using the provided algorithm and returns the sorted instance.
+
+```javascript
+var arr = [ 3, 2, 1, 5, 8, 9, 6 ];
+
+var x = arr.sortWith( "bubblesort" );
+
+console.log( x );
+
+```
+`Output: [1, 2, 3, 5, 6, 8, 9]`
+
+General syntax: `Array.sortWith( algorithm )`
+
 ##### .sort()
 Sorts the current array using quicksort and returns the sorted instance.
 
@@ -219,8 +234,21 @@ Output:
 1
 [2, 1]
 ```
+General syntax: `Array.atRandom( length )`
 
-General syntax: `Array.arRandom( length )`
+
+##### .isArray( array )
+Returns true if the passed parameter is an array; false, otherwise.
+
+```javascript
+var arr = [ 1, 2, 3 ];
+
+console.log( Array.prototype.isArray.call ( arr ) );
+
+```
+`Output: true`
+
+General syntax: `Array.isArray( array )`
 
 #### Object
 ##### .allKeys()

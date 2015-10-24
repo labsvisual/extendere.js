@@ -35,6 +35,29 @@ describe("Extendere", function() {
 
         });
 
+        describe( ".sortWith()", function() {
+
+            it( "should sort the array in ascending order with quick sort", function() {
+
+                var arr = [ 3, 2, 1 ],
+                    nea = arr.sortWith( "quicksort" );
+
+                expect( nea ).to.eql( [ 1, 2, 3 ] );
+
+            });
+
+            it( "should sort the array in ascending order with bubble sort", function() {
+
+                var arr = [ 3, 2, 1, 5, 8, 9, 6 ],
+                    nea = arr.sortWith( "bubblesort" );
+
+                expect( nea ).to.eql( [ 1, 2, 3, 5, 6, 8, 9 ] );
+
+            });
+
+
+        });
+
         describe( ".sort()", function() {
 
             it( "should sort the array in ascending order", function() {
@@ -263,6 +286,26 @@ describe("Extendere", function() {
 
                 expect( arx ).to.have.length( 5 );
                 expect( type ).to.be.equal( "[object Array]" );
+
+            });
+
+        });
+
+        describe( ".isArray()", function() {
+
+            it( "should return true when an array is passed", function() {
+
+                var x = [ 1, 2, 3 ];
+                expect( Array.prototype.isArray.call( this, x ) ).to.be.true;
+
+            });
+
+            it( "should return false when an array is not passed", function() {
+
+                expect( Array.prototype.isArray.call( this, 1 ) ).to.be.false;
+                expect( Array.prototype.isArray.call( this, "1" ) ).to.be.false;
+                expect( Array.prototype.isArray.call( this, null ) ).to.be.false;
+                expect( Array.prototype.isArray.call( this, false ) ).to.be.false;
 
             });
 
