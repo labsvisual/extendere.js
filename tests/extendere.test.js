@@ -2,6 +2,69 @@ var expect = chai.expect;
 
 describe("Extendere", function() {
 
+    describe( "Window", function() {
+
+        it( "should expose the 'goBack' function", function() {
+
+            expect( window.goBack ).to.not.be.undefined;
+            expect( window.goBack ).to.not.be.null;
+
+        });
+
+        it( "should expose the 'goBackToDepth' function", function() {
+
+            expect( window.goBackToDepth ).to.not.be.undefined;
+            expect( window.goBackToDepth ).to.not.be.null;
+
+        });
+
+        it( "should expose the 'onDomReady' function", function() {
+
+            expect( window.onDomReady ).to.not.be.undefined;
+            expect( window.onDomReady ).to.not.be.null;
+
+        });
+
+        it( "should expose the 'getReferrer' function", function() {
+
+            expect( window.getReferrer ).to.not.be.undefined;
+            expect( window.getReferrer ).to.not.be.null;
+
+        });
+
+        it( "should expose the 'wasReferredFrom' function", function() {
+
+            expect( window.wasReferredFrom ).to.not.be.undefined;
+            expect( window.wasReferredFrom ).to.not.be.null;
+
+        });
+
+        it( "should expose the 'isValidUri' function", function() {
+
+            expect( window.isValidUri ).to.not.be.undefined;
+            expect( window.isValidUri ).to.not.be.null;
+
+        });
+
+        describe( ".isValidUri()", function() {
+
+            it( "should return true if a valid URI is provided", function() {
+
+                expect( window.isValidUri( "http://helloworld.com" ) ).to.be.true;
+
+            });
+
+            it( "should false if a valid URI is not provided", function() {
+
+                expect( window.isValidUri( "https://helloworldcom" ) ).to.be.false;
+
+            });
+
+        });
+
+
+    });
+
     describe( "Array", function() {
 
         describe( ".each()", function() {
