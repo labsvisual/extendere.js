@@ -282,20 +282,49 @@ Array.prototype.union = function( secondArray ) {
 
 Array.prototype.intersect = function( secondArray ) {
 
-    var ret = [];
+    var isArray = function( array ) {
+        return Object.prototype.toString.call( array ) === '[object Array]';
+    }
+
+    var ret = [],
+        arr = [];
+
+    for( var i = 0; i < arguments.length; i++ ) {
+
+        var current = arguments[ i ];
+        if( isArray( current ) ) {
+
+            arr.push( current );
+
+        }
+
+    }
+
+    var arx = arr.flatten().removeDuplicates();
+
     for( var i = 0; i < this.length; i++ ) {
 
-         var current = this[ i ];
-         for( var j = 0; j < secondArray.length; j++ ) {
+        var current = this[ i ];
+        if( Array.prototype.exists.call( arx, this[ i ] ) ) { ret.push( current ); }
 
-             var c = secondArray[ j ];
-             if ( c === current ) {
+    }
 
-                 ret.push( c );
+    return ret;
 
-             }
+}
 
-         }
+Array.prototype.removeDuplicates = function() {
+
+    var ret = [];
+outer:  for( var i = 0; i < this.length; i++ ) {
+
+        for( var j = ( i + 1 ); j < this.length; j++ ) {
+
+            if ( ( this[ i ] === this[ j ] ) ) { continue outer; }
+
+        }
+
+        ret.push( this[ i ] );
 
     }
 

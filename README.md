@@ -167,21 +167,41 @@ console.log( ar );
 
 General syntax: `Array.union( secondArray, *arrays )`
 
-##### .intersect( secondArray )
-Returns an array which is the intersection of it and the second array. Follows the same intersection rule as that in
+##### .intersect( secondArray, \*arrays )
+Returns an array which is the intersection of all the arrays provided. Follows the same intersection rule as that in
 elementary set theory.
 
 ```javascript
 var arr = [ 1, 2, 3 ],
-    arx = [ 3, 4, 5 ],
-    ar  = arr.intersect( arx );
+    arx = [ 2, 3, 4, 5 ],
+    ary = [ 2, 3 ];
+    ar  = arr.intersect( arx, ary);
 
 console.log( ar );
 
 ```
-`Output: [3]`
+`Output: [2, 3]`
 
-General syntax: `Array.intersect( secondArray )`
+General syntax: `Array.intersect( secondArray, *arrays )`
+
+##### .removeDuplicates()
+Returns an array with all the duplicates removed.
+
+```javascript
+var arr = [ 1, 2, 3, 2, 3, 2, 3, 4, 5, 6, 8, 2, 5, 7 ],
+    arx = [ 1, 2, 1, 1, 1, 1, 2, 2, 2, 2, 1, 1, 1, 1 ];
+
+console.log( arr.removeDuplicates() );
+console.log( arx.removeDuplicates() );
+
+```
+```
+Output:
+[1, 3, 4, 6, 8, 2, 5, 7]
+[2, 1]
+```
+
+General syntax: `Array.intersect( secondArray, *arrays )`
 
 ##### .atRandom( length )
 Returns a random list of element(s) from the array of length `length`; if none provided, returns a single random
