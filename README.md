@@ -219,8 +219,21 @@ Output:
 1
 [2, 1]
 ```
+General syntax: `Array.atRandom( length )`
 
-General syntax: `Array.arRandom( length )`
+
+##### .isArray( array )
+Returns true if the passed parameter is an array; false, otherwise.
+
+```javascript
+var arr = [ 1, 2, 3 ];
+
+console.log( Array.prototype.isArray.call ( arr ) );
+
+```
+`Output: true`
+
+General syntax: `Array.isArray( array )`
 
 #### Object
 ##### .allKeys()

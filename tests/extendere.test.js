@@ -268,6 +268,26 @@ describe("Extendere", function() {
 
         });
 
+        describe( ".isArray()", function() {
+
+            it( "should return true when an array is passed", function() {
+
+                var x = [ 1, 2, 3 ];
+                expect( Array.prototype.isArray.call( this, x ) ).to.be.true;
+
+            });
+
+            it( "should return false when an array is not passed", function() {
+
+                expect( Array.prototype.isArray.call( this, 1 ) ).to.be.false;
+                expect( Array.prototype.isArray.call( this, "1" ) ).to.be.false;
+                expect( Array.prototype.isArray.call( this, null ) ).to.be.false;
+                expect( Array.prototype.isArray.call( this, false ) ).to.be.false;
+
+            });
+
+        });
+
     });
 
     describe( "Object", function() {
