@@ -150,21 +150,22 @@ console.log( arr.exists( 3 ) );
 
 General syntax: `Array.exists( element )`
 
-##### .union( secondArray )
-Returns an array which is the union of it and the second array. Follows the same union rule as that in
+##### .union( secondArray, \*arrays )
+Returns an array which is the union of all the arrays provided. Follows the same union rule as that in
 elementary set theory.
 
 ```javascript
 var arr = [ 1, 2, 3 ],
     arx = [ 3, 4, 5 ],
-    ar  = arr.union( arx );
+    ary = [ 6, 7, 8 ];
+    ar  = arr.union( arx, ary );
 
 console.log( ar );
 
 ```
-`Output: [1, 2, 3, 4, 5]`
+`Output: [1, 2, 3, 4, 5, 6, 7, 8]`
 
-General syntax: `Array.union( secondArray )`
+General syntax: `Array.union( secondArray, *arrays )`
 
 ##### .intersect( secondArray )
 Returns an array which is the intersection of it and the second array. Follows the same intersection rule as that in
