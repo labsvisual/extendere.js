@@ -35,6 +35,29 @@ describe("Extendere", function() {
 
         });
 
+        describe( ".sortWith()", function() {
+
+            it( "should sort the array in ascending order with quick sort", function() {
+
+                var arr = [ 3, 2, 1 ],
+                    nea = arr.sortWith( "quicksort" );
+
+                expect( nea ).to.eql( [ 1, 2, 3 ] );
+
+            });
+
+            it( "should sort the array in ascending order with bubble sort", function() {
+
+                var arr = [ 3, 2, 1, 5, 8, 9, 6 ],
+                    nea = arr.sortWith( "bubblesort" );
+
+                expect( nea ).to.eql( [ 1, 2, 3, 5, 6, 8, 9 ] );
+
+            });
+
+
+        });
+
         describe( ".sort()", function() {
 
             it( "should sort the array in ascending order", function() {
