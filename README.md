@@ -58,6 +58,21 @@ console.log( x );
 
 General syntax: `Array.map( function( item ) {} )`
 
+##### .sortWith( algorithm )
+Sorts the current array using the provided algorithm and returns the sorted instance.
+
+```javascript
+var arr = [ 3, 2, 1, 5, 8, 9, 6 ];
+
+var x = arr.sortWith( "bubblesort" );
+
+console.log( x );
+
+```
+`Output: [1, 2, 3, 5, 6, 8, 9]`
+
+General syntax: `Array.sortWith( algorithm )`
+
 ##### .sort()
 Sorts the current array using quicksort and returns the sorted instance.
 
@@ -150,37 +165,58 @@ console.log( arr.exists( 3 ) );
 
 General syntax: `Array.exists( element )`
 
-##### .union( secondArray )
-Returns an array which is the union of it and the second array. Follows the same union rule as that in
+##### .union( secondArray, \*arrays )
+Returns an array which is the union of all the arrays provided. Follows the same union rule as that in
 elementary set theory.
 
 ```javascript
 var arr = [ 1, 2, 3 ],
     arx = [ 3, 4, 5 ],
-    ar  = arr.union( arx );
+    ary = [ 6, 7, 8 ];
+    ar  = arr.union( arx, ary );
 
 console.log( ar );
 
 ```
-`Output: [1, 2, 3, 4, 5]`
+`Output: [1, 2, 3, 4, 5, 6, 7, 8]`
 
-General syntax: `Array.union( secondArray )`
+General syntax: `Array.union( secondArray, *arrays )`
 
-##### .intersect( secondArray )
-Returns an array which is the intersection of it and the second array. Follows the same intersection rule as that in
+##### .intersect( secondArray, \*arrays )
+Returns an array which is the intersection of all the arrays provided. Follows the same intersection rule as that in
 elementary set theory.
 
 ```javascript
 var arr = [ 1, 2, 3 ],
-    arx = [ 3, 4, 5 ],
-    ar  = arr.intersect( arx );
+    arx = [ 2, 3, 4, 5 ],
+    ary = [ 2, 3 ];
+    ar  = arr.intersect( arx, ary);
 
 console.log( ar );
 
 ```
-`Output: [3]`
+`Output: [2, 3]`
 
-General syntax: `Array.intersect( secondArray )`
+General syntax: `Array.intersect( secondArray, *arrays )`
+
+##### .removeDuplicates()
+Returns an array with all the duplicates removed.
+
+```javascript
+var arr = [ 1, 2, 3, 2, 3, 2, 3, 4, 5, 6, 8, 2, 5, 7 ],
+    arx = [ 1, 2, 1, 1, 1, 1, 2, 2, 2, 2, 1, 1, 1, 1 ];
+
+console.log( arr.removeDuplicates() );
+console.log( arx.removeDuplicates() );
+
+```
+```
+Output:
+[1, 3, 4, 6, 8, 2, 5, 7]
+[2, 1]
+```
+
+General syntax: `Array.intersect( secondArray, *arrays )`
 
 ##### .atRandom( length )
 Returns a random list of element(s) from the array of length `length`; if none provided, returns a single random
@@ -198,8 +234,21 @@ Output:
 1
 [2, 1]
 ```
+General syntax: `Array.atRandom( length )`
 
-General syntax: `Array.arRandom( length )`
+
+##### .isArray( array )
+Returns true if the passed parameter is an array; false, otherwise.
+
+```javascript
+var arr = [ 1, 2, 3 ];
+
+console.log( Array.prototype.isArray.call ( arr ) );
+
+```
+`Output: true`
+
+General syntax: `Array.isArray( array )`
 
 #### Object
 ##### .allKeys()
@@ -368,6 +417,59 @@ Output:
 ```
 
 General syntax: `window.math.toRadians( val, roundTo )`
+
+#### Window
+##### .goBack()
+Go back 1 page in history.
+
+General syntax: `window.goBack()`
+
+##### .goBackToDepth( n )
+Go back to a depth of `n` into history.
+
+General syntax: `window.goBackToDepth( n )`
+
+##### .onDomReady( callback )
+Invokes `callback` when the DOM is ready: i.e. parsed and rendered.
+
+```javascript
+window.onDomReady( function() {
+
+    console.log( "DOM ready" );
+
+});
+```
+
+`Outpue: DOM ready`
+
+General syntax: `window.onDomReady( callback )`
+
+##### .getReferrer()
+Gets the page which referred the user to the current page. The referrer is the page which leads the user to the page he is on;
+either through a link or otherwise.
+
+General syntax: `window.getReferrer()`
+
+##### .wasReferredFrom( expectedRef )
+Returns true if the current page was referred from `expectedRef`; false, otherwise.
+
+General syntax: `window.wasReferredFrom( expectedRef )`
+
+##### .isValidUri( uri )
+Returns true if the provided URI is valid.
+
+```javascript
+console.log( window.isValidUri( "http://helloworld.com" ) );
+console.log( window.isValidUri( "http://helloworldom" ) );
+```
+
+```
+Output:
+true
+false
+```
+
+General syntax: `window.isValidUrl( uri )`
 
 **You need to call: ** `ExpendereMath.exposeMath();` to get the `window.math` object. Remember, it's not the same as
 `window.Math`.

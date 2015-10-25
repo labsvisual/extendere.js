@@ -2,6 +2,69 @@ var expect = chai.expect;
 
 describe("Extendere", function() {
 
+    describe( "Window", function() {
+
+        it( "should expose the 'goBack' function", function() {
+
+            expect( window.goBack ).to.not.be.undefined;
+            expect( window.goBack ).to.not.be.null;
+
+        });
+
+        it( "should expose the 'goBackToDepth' function", function() {
+
+            expect( window.goBackToDepth ).to.not.be.undefined;
+            expect( window.goBackToDepth ).to.not.be.null;
+
+        });
+
+        it( "should expose the 'onDomReady' function", function() {
+
+            expect( window.onDomReady ).to.not.be.undefined;
+            expect( window.onDomReady ).to.not.be.null;
+
+        });
+
+        it( "should expose the 'getReferrer' function", function() {
+
+            expect( window.getReferrer ).to.not.be.undefined;
+            expect( window.getReferrer ).to.not.be.null;
+
+        });
+
+        it( "should expose the 'wasReferredFrom' function", function() {
+
+            expect( window.wasReferredFrom ).to.not.be.undefined;
+            expect( window.wasReferredFrom ).to.not.be.null;
+
+        });
+
+        it( "should expose the 'isValidUri' function", function() {
+
+            expect( window.isValidUri ).to.not.be.undefined;
+            expect( window.isValidUri ).to.not.be.null;
+
+        });
+
+        describe( ".isValidUri()", function() {
+
+            it( "should return true if a valid URI is provided", function() {
+
+                expect( window.isValidUri( "http://helloworld.com" ) ).to.be.true;
+
+            });
+
+            it( "should false if a valid URI is not provided", function() {
+
+                expect( window.isValidUri( "https://helloworldcom" ) ).to.be.false;
+
+            });
+
+        });
+
+
+    });
+
     describe( "Array", function() {
 
         describe( ".each()", function() {
@@ -32,6 +95,29 @@ describe("Extendere", function() {
                 expect( nea ).be.eql( [ 3, 6, 9 ] );
 
             });
+
+        });
+
+        describe( ".sortWith()", function() {
+
+            it( "should sort the array in ascending order with quick sort", function() {
+
+                var arr = [ 3, 2, 1 ],
+                    nea = arr.sortWith( "quicksort" );
+
+                expect( nea ).to.eql( [ 1, 2, 3 ] );
+
+            });
+
+            it( "should sort the array in ascending order with bubble sort", function() {
+
+                var arr = [ 3, 2, 1, 5, 8, 9, 6 ],
+                    nea = arr.sortWith( "bubblesort" );
+
+                expect( nea ).to.eql( [ 1, 2, 3, 5, 6, 8, 9 ] );
+
+            });
+
 
         });
 
@@ -205,6 +291,15 @@ describe("Extendere", function() {
 
             });
 
+            it( "should return an array containing the union of the passed arrays", function() {
+
+                var arr = [ 1, 2, 3 ]
+                    arx = arr.union( [ 3, 4, 5 ], [ 5, 6, 7 ], [ 5, 6, 7 ], [ 8, 9, 10 ] );
+
+                expect( arx ).to.eql( [ 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 ] );
+
+            });
+
         });
 
         describe( ".intersect()", function() {
@@ -212,9 +307,23 @@ describe("Extendere", function() {
             it( "should return an array containing a list of the common elements", function() {
 
                 var arr = [ 1, 2, 3 ],
-                    arx = arr.intersect( [ 2, 3 ] );
+                    arx = arr.intersect( [ 2, 3 ], [ 2, 3 ], [ 4, 5, 6, 7 ] );
 
                 expect( arx ).to.eql( [ 2, 3 ] );
+
+            });
+
+        });
+
+        describe( ".removeDuplicates()", function() {
+
+            it( "should return an array without any duplicates", function() {
+
+                var arr = [ 1, 2, 3, 2, 3, 2, 3, 4, 5, 6, 8, 2, 5, 7 ],
+                    arx = [ 1, 2, 1, 1, 1, 1, 2, 2, 2, 2, 1, 1, 1, 1 ];
+
+                expect( arr.removeDuplicates() ).to.eql( [ 1, 3, 4, 6, 8, 2, 5, 7 ] );
+                expect( arx.removeDuplicates() ).to.eql( [ 2, 1 ] );
 
             });
 
@@ -240,6 +349,26 @@ describe("Extendere", function() {
 
                 expect( arx ).to.have.length( 5 );
                 expect( type ).to.be.equal( "[object Array]" );
+
+            });
+
+        });
+
+        describe( ".isArray()", function() {
+
+            it( "should return true when an array is passed", function() {
+
+                var x = [ 1, 2, 3 ];
+                expect( Array.prototype.isArray.call( this, x ) ).to.be.true;
+
+            });
+
+            it( "should return false when an array is not passed", function() {
+
+                expect( Array.prototype.isArray.call( this, 1 ) ).to.be.false;
+                expect( Array.prototype.isArray.call( this, "1" ) ).to.be.false;
+                expect( Array.prototype.isArray.call( this, null ) ).to.be.false;
+                expect( Array.prototype.isArray.call( this, false ) ).to.be.false;
 
             });
 
