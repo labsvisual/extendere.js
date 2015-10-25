@@ -418,6 +418,59 @@ Output:
 
 General syntax: `window.math.toRadians( val, roundTo )`
 
+#### Window
+##### .goBack()
+Go back 1 page in history.
+
+General syntax: `window.goBack()`
+
+##### .goBackToDepth( n )
+Go back to a depth of `n` into history.
+
+General syntax: `window.goBackToDepth( n )`
+
+##### .onDomReady( callback )
+Invokes `callback` when the DOM is ready: i.e. parsed and rendered.
+
+```javascript
+window.onDomReady( function() {
+
+    console.log( "DOM ready" );
+
+});
+```
+
+`Outpue: DOM ready`
+
+General syntax: `window.onDomReady( callback )`
+
+##### .getReferrer()
+Gets the page which referred the user to the current page. The referrer is the page which leads the user to the page he is on;
+either through a link or otherwise.
+
+General syntax: `window.getReferrer()`
+
+##### .wasReferredFrom( expectedRef )
+Returns true if the current page was referred from `expectedRef`; false, otherwise.
+
+General syntax: `window.wasReferredFrom( expectedRef )`
+
+##### .isValidUri( uri )
+Returns true if the provided URI is valid.
+
+```javascript
+console.log( window.isValidUri( "http://helloworld.com" ) );
+console.log( window.isValidUri( "http://helloworldom" ) );
+```
+
+```
+Output:
+true
+false
+```
+
+General syntax: `window.isValidUrl( uri )`
+
 **You need to call: ** `ExpendereMath.exposeMath();` to get the `window.math` object. Remember, it's not the same as
 `window.Math`.
 
