@@ -471,9 +471,6 @@ false
 
 General syntax: `window.isValidUrl( uri )`
 
-**You need to call: ** `ExpendereMath.exposeMath();` to get the `window.math` object. Remember, it's not the same as
-`window.Math`.
-
 ### Conclusion
 That's it for this version. There are a lot of goodies planned for the next version. Hold tight.
 
