@@ -14,48 +14,71 @@ Array.prototype.map = function( filter ) {
     }
     return retVal;
 }
-Array.prototype.sort = function() {
+Array.prototype.sortWith = function( algorithm ) {
     var context = this;
-    var swap = function( items, firstIndex, secondIndex ){
-        var temp = items[ firstIndex ];
-        items[ firstIndex ] = items[ secondIndex ];
-        items[ secondIndex ] = temp;
+    algorithm = ( algorithm ) || "quicksort";
+    switch( algorithm.toLowerCase() ) {
+        default:
+        case "quicksort":
+            var swap = function( items, firstIndex, secondIndex ){
+                var temp = items[ firstIndex ];
+                items[ firstIndex ] = items[ secondIndex ];
+                items[ secondIndex ] = temp;
+            }
+            var partition = function( items, left, right ) {
+                var pivot   = items[ Math.floor( ( right + left ) / 2 ) ],
+                    i       = left,
+                    j       = right;
+                while ( i <= j ) {
+                    while ( items[ i ] < pivot ) {
+                        i++;
+                    }
+                    while ( items[ j ] > pivot ) {
+                        j--;
+                    }
+                    if ( i <= j ) {
+                        swap( items, i, j );
+                        i++;
+                        j--;
+                    }
+                }
+                return i;
+            }
+            var quickSort = function( items, left, right ) {
+                var index;
+                if (items.length > 1) {
+                    left = typeof left != "number" ? 0 : left;
+                    right = typeof right != "number" ? items.length - 1 : right;
+                    index = partition( items, left, right );
+                    if ( left < index - 1 ) {
+                        quickSort( items, left, index - 1 );
+                    }
+                    if ( index < right ) {
+                        quickSort( items, index, right );
+                    }
+                }
+                return items;
+            }
+            return quickSort( context );
+            break;
+        case "bubblesort":
+            var temp,
+                arr = context;
+            for( var i = 0; i < context.length; i++ ) {
+                for( var j = i; j > 0; j-- ) {
+                    if( arr[ j ] < arr[ j - 1 ] ) {
+                        temp = arr[ j ];
+                        arr[ j ] = arr[ j - 1 ];
+                        arr[ j - 1 ] = temp;
+                    }
+                }
+            }
+            return arr;
+            break;
     }
-    var partition = function( items, left, right ) {
-        var pivot   = items[ Math.floor( ( right + left ) / 2 ) ],
-            i       = left,
-            j       = right;
-        while ( i <= j ) {
-            while ( items[ i ] < pivot ) {
-                i++;
-            }
-            while ( items[ j ] > pivot ) {
-                j--;
-            }
-            if ( i <= j ) {
-                swap( items, i, j );
-                i++;
-                j--;
-            }
-        }
-        return i;
-    }
-    var quickSort = function( items, left, right ) {
-        var index;
-        if (items.length > 1) {
-            left = typeof left != "number" ? 0 : left;
-            right = typeof right != "number" ? items.length - 1 : right;
-            index = partition( items, left, right );
-            if ( left < index - 1 ) {
-                quickSort( items, left, index - 1 );
-            }
-            if ( index < right ) {
-                quickSort( items, index, right );
-            }
-        }
-        return items;
-    }
-    return quickSort( context );
+}
+Array.prototype.sort = function() {
+    return ( Array.prototype.sortWith.call( this ) );
 }
 Array.prototype.indexOf = function( item, isSorted ) {
     var binarySearch = function( array, item ) {
@@ -104,13 +127,10 @@ Array.prototype.last = function( numberOfElements ) {
 }
 Array.prototype.flatten = function() {
     var ret = [],
-        isArray = function( element ) {
-            return Object.prototype.toString.call( element ) === '[object Array]';
-        },
         flat = function( element ) {
             for( var i = 0; i < element.length; i++ ) {
                 var currentElement = element[ i ];
-                if ( isArray( currentElement ) ) {
+                if ( Array.prototype.isArray.call( this, currentElement ) ) {
                     flat( currentElement );
                 } else {
                     ret.push( currentElement );
@@ -119,7 +139,7 @@ Array.prototype.flatten = function() {
         };
     for( var i = 0; i < this.length; i++ ) {
         var currentElement = this[ i ];
-        if ( isArray( currentElement ) ) {
+        if ( Array.prototype.isArray.call( this, currentElement ) ) {
             flat( currentElement );
         } else {
             ret.push( currentElement );
@@ -147,22 +167,38 @@ Array.prototype.exists = function( element ) {
 }
 Array.prototype.union = function( secondArray ) {
     var ret     = this;
-    for( var i = 0; i < secondArray.length; i++ ) {
-        var current = secondArray[ i ];
-        if( !ret.exists( current ) ){ ret.push( current ); }
+    for( var j = 0; j < arguments.length; j++ ) {
+        var arr = arguments[ j ];
+        for( var i = 0; i < arr.length; i++ ) {
+            var current = arr[ i ];
+            if( !ret.exists( current ) ){ ret.push( current ); }
+        }
     }
     return ret;
 }
 Array.prototype.intersect = function( secondArray ) {
-    var ret = [];
+    var ret = [],
+        arr = [];
+    for( var i = 0; i < arguments.length; i++ ) {
+        var current = arguments[ i ];
+        if( Array.prototype.isArray.call( this, current ) ) {
+            arr.push( current );
+        }
+    }
+    var arx = arr.flatten().removeDuplicates();
     for( var i = 0; i < this.length; i++ ) {
-         var current = this[ i ];
-         for( var j = 0; j < secondArray.length; j++ ) {
-             var c = secondArray[ j ];
-             if ( c === current ) {
-                 ret.push( c );
-             }
-         }
+        var current = this[ i ];
+        if( Array.prototype.exists.call( arx, this[ i ] ) ) { ret.push( current ); }
+    }
+    return ret;
+}
+Array.prototype.removeDuplicates = function() {
+    var ret = [];
+outer:  for( var i = 0; i < this.length; i++ ) {
+        for( var j = ( i + 1 ); j < this.length; j++ ) {
+            if ( ( this[ i ] === this[ j ] ) ) { continue outer; }
+        }
+        ret.push( this[ i ] );
     }
     return ret;
 }
@@ -180,23 +216,8 @@ Array.prototype.atRandom = function( length ) {
         return ret;
     }
 }
-
-var Extendere = {
-        goBack: function() {
-        this.goBackToDepth( -1 );
-    },
-        goBackToDepth: function( depth ) {
-        if ( !( history || false ) ) {
-            console.log( "Extendere.js ERROR: The current browser does not support the 'history' object." );
-            return;
-        }
-        history.back( depth );
-    },
-        onDomReady: function( callback ) {
-        document.addEventListener('DOMContentLoaded', function() {
-            callback();
-        });
-    }
+Array.prototype.isArray = function( arr ) {
+    return( Object.prototype.toString.call( arr ) === '[object Array]' );
 }
 
 var ExtendereMath = {
@@ -301,4 +322,29 @@ Object.prototype.merge = function( secondObject ) {
     ret = ret.substring( 0, ret.length - 1 );
     ret = eval ( "({" + ret + "})" );
     return ret;
+}
+
+window.goBack = function() {
+    this.goBackToDepth( -1 );
+}
+window.goBackToDepth = function( depth ) {
+    if ( !( history || false ) ) {
+        console.log( "Extendere.js ERROR: The current browser does not support the 'history' object." );
+        return;
+    }
+    history.back( depth );
+}
+window.onDomReady = function( callback ) {
+    document.addEventListener('DOMContentLoaded', function() {
+        callback();
+    });
+}
+window.getReferrer = function() {
+    return ( document.referrer );
+}
+window.wasReferredFrom = function( referredFrom ) {
+    return ( document.referrer === referredFrom );
+}
+window.isValidUri = function( uri ) {
+    return /^(https?|ftp):\/\/(((([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&'\(\)\*\+,;=]|:)*@)?(((\d|[1-9]\d|1\d\d|2[0-4]\d|25[0-5])\.(\d|[1-9]\d|1\d\d|2[0-4]\d|25[0-5])\.(\d|[1-9]\d|1\d\d|2[0-4]\d|25[0-5])\.(\d|[1-9]\d|1\d\d|2[0-4]\d|25[0-5]))|((([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])*([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])))\.)+(([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])*([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])))\.?)(:\d*)?)(\/((([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&'\(\)\*\+,;=]|:|@)+(\/(([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&'\(\)\*\+,;=]|:|@)*)*)?)?(\?((([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&'\(\)\*\+,;=]|:|@)|[\uE000-\uF8FF]|\/|\?)*)?(\#((([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&'\(\)\*\+,;=]|:|@)|\/|\?)*)?$/i.test( uri );
 }
